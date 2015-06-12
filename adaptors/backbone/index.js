@@ -15,10 +15,12 @@
 var Context = require('../../src/template/template_context');
 var BackboneAdaptor = require('./context_adaptor');
 Context.setAdapterFunctions(BackboneAdaptor);
+Context.setWidgetWrapper(require('./backbone_view_widget'));
 
 module.exports = {
   Collection: require('./base_collection'),
   Model: require('./base_model'),
   View: require('./base_view'),
-  Backbone: require('backbone')
+  Backbone: require('backbone'),
+  setDynamicResolver: Context.setDynamicPartialResolver
 };

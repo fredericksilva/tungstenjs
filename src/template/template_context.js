@@ -211,4 +211,20 @@ Context.setAdapterFunctions = function(adaptor) {
   }
 };
 
+/**
+ * Sets the webpack resolver function for dynamic templates
+ * @param {Function} resolver  Webpack require.context to use
+ */
+Context.setDynamicPartialResolver = function(resolver) {
+  Context.dynamicPartialResolver = resolver;
+};
+
+/**
+ * Sets the constructor to wrap VirtualDom widgets in
+ * @param {Function} WidgetWrapper  Constructor for widgets
+ */
+Context.setWidgetWrapper = function(WidgetWrapper) {
+  Context.WidgetWrapper = WidgetWrapper;
+};
+
 module.exports = Context;

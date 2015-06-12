@@ -15,9 +15,11 @@
 var Context = require('../../src/template/template_context');
 var AmpersandAdaptor = require('./context_adaptor');
 Context.setAdapterFunctions(AmpersandAdaptor);
+Context.setWidgetWrapper(require('./ampersand_view_widget'));
 
 module.exports = {
   Collection: require('./base_collection'),
   Model: require('./base_model'),
-  View: require('./base_view')
+  View: require('./base_view'),
+  setDynamicResolver: Context.setDynamicPartialResolver
 };

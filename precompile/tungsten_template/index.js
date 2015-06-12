@@ -56,7 +56,9 @@ function findPartials(template, partials) {
     // Partial means we found one
     case ractiveTypes.PARTIAL:
       var partialName = parseInterpolatorString(template);
-      partials[partialName] = true;
+      if (partialName.substr(0, 4) !== 'dyn_') {
+        partials[partialName] = true;
+      }
       break;
 
     // Element or Sections should be iterated into
@@ -138,7 +140,7 @@ module.exports = function(contents) {
   var templatePath = path.relative(path.dirname(module.dest), __dirname + '/template');
   templatePath = templatePath.replace(/\\/g, '/');
 
-  var output = 'var Template=require("tungstenjs/src/template/template");';
+  var output = 'var Template=require("../../../src/template/template");';
   output += 'var template=new Template(' + template + ');';
   output += 'module.exports=template;';
   if (_.size(partials) > 0) {

@@ -7,7 +7,6 @@
 var _ = require('underscore');
 var Backbone = require('backbone');
 var tungsten = require('../../src/tungsten');
-var ViewWidget = require('./backbone_view_widget');
 
 // Cached regex to split keys for `delegate`.
 var delegateEventSplitter = /^(\S+)\s*(.*)$/;
@@ -63,7 +62,7 @@ var BaseView = Backbone.View.extend({
         this.el.appendChild(this.compiledTemplate.toDom(dataItem));
       }
       // Run attachView with this instance to attach childView widget points
-      this.compiledTemplate = this.compiledTemplate.attachView(this, ViewWidget);
+      this.compiledTemplate = this.compiledTemplate.attachView(this);
 
       // If the deferRender option was set, it means a layout manager / a module will control when this view is rendered
       if (!options.deferRender) {
@@ -213,7 +212,7 @@ var BaseView = Backbone.View.extend({
     }
     if (newTemplate) {
       // @Todo figure out how to check template equality
-      this.compiledTemplate = newTemplate.attachView(this, ViewWidget);
+      this.compiledTemplate = newTemplate.attachView(this);
       flag = true;
     }
 

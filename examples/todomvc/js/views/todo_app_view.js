@@ -3,7 +3,7 @@
 */
 'use strict';
 
-var TungstenBackboneBase = require('tungstenjs/adaptors/backbone');
+var TungstenBackboneBase = require('../../../../adaptors/backbone');
 var View = TungstenBackboneBase.View;
 var NewItemView = require('./todo_new_item_view');
 var TodoItemView = require('./todo_item_view');

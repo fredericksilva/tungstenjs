@@ -10,7 +10,7 @@ module.exports = {
     }
   },
   resolveLoader: {
-    modulesDirectories: ['node_modules', 'node_modules/tungstenjs/precompile']
+    modulesDirectories: ['node_modules', '../../precompile']
   },
   module: {
     loaders: [

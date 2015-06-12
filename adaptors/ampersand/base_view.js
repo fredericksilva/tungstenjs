@@ -7,7 +7,6 @@
 var _ = require('underscore');
 var AmpersandView = require('ampersand-view');
 var tungsten = require('../../src/tungsten');
-var ViewWidget = require('./ampersand_view_widget');
 
 // Cached regex to split keys for `delegate`.
 var delegateEventSplitter = /^(\S+)\s*(.*)$/;
@@ -55,7 +54,7 @@ var BaseView = AmpersandView.extend({
         this.el.appendChild(this.template.toDom(dataItem));
       }
       // Run attachView with this instance to attach childView widget points
-      this.template = this.template.attachView(this, ViewWidget);
+      this.template = this.template.attachView(this);
 
       // If the deferRender option was set, it means a layout manager / a module will control when this view is rendered
       if (!options.deferRender) {
@@ -204,7 +203,7 @@ var BaseView = AmpersandView.extend({
     }
     if (newTemplate) {
       // @Todo figure out how to check template equality
-      this.template = newTemplate.attachView(this, ViewWidget);
+      this.template = newTemplate.attachView(this);
       flag = true;
     }
 

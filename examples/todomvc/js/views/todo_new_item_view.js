@@ -4,7 +4,7 @@
 'use strict';
 
 
-var TungstenBackboneBase = require('tungstenjs/adaptors/backbone');
+var TungstenBackboneBase = require('../../../../adaptors/backbone');
 var View = TungstenBackboneBase.View;
 var ENTER_KEY = 13;
 var NewTodoItemView = View.extend({

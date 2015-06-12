@@ -254,6 +254,20 @@ function renderVdom(template, context, partials, parentView, firstRender) {
     case ractiveTypes.PARTIAL:
       var partialName = Context.getInterpolatorKey(template);
       result = null;
+      if (partialName.substr(0, 4) === 'dyn_') {
+        var key = partialName.substr(4);
+        partialName = context.lookup('dynamic_partials.' + key);
+        if (partialName == null) {
+          logger.warn('Warning: Dynamic partial template referenced, but not defined: ' + key);
+          return result;
+        }
+        if (!partials[partialName]) {
+          partials[partialName] = Context.dynamicPartialResolver(partialName + '.mustache');
+        }
+        if (parentView && !partials[partialName].view) {
+          partials[partialName] = partials[partialName].attachView(parentView, true);
+        }
+      }
       if (partials[partialName]) {
         var partialTemplate = partials[partialName];
         if (partialTemplate.templateObj) {

@@ -146,6 +146,10 @@ var attachViews = function(view, template, widgetWrapper, partials, childClasses
   // If this is a partial, lookup and recurse
   if (template.t === ractiveTypes.PARTIAL) {
     var partialName = Context.getInterpolatorKey(template);
+    if (partialName.substr(0, 4) === 'dyn_') {
+      // Partial needs to be resolved at runtime
+      return template;
+    }
     if (!partials[partialName]) {
       logger.warn('Warning: no partial registered with the name ' + partialName);
       return null;
@@ -163,15 +167,15 @@ var attachViews = function(view, template, widgetWrapper, partials, childClasses
 
 /**
  * Exposed function to attachView
- * @param  {Object}   view          View to attach to
- * @param  {Function} widgetWrapper Constructor function for widget from adaptor
- * @return {Template}               New template with updated template object
+ * @param  {Object}   view       View to attach to
+ * @param  {Boolean}  isDynamic  Indicates that this is a dynamic partial being attached on the fly
+ * @return {Template}            New template with updated template object
  */
-Template.prototype.attachView = function(view, widgetWrapper) {
+Template.prototype.attachView = function(view, isDynamic) {
   var templateObj = _.clone(this.templateObj);
   templateObj.root = true;
   // If this view is the top level wrapper, create a fake element to wrap it in
-  if (!view.parentView) {
+  if (!isDynamic && !view.parentView) {
     // Create wrapper element based on view's element
     templateObj = {
       't': ractiveTypes.ELEMENT,
@@ -199,7 +203,7 @@ Template.prototype.attachView = function(view, widgetWrapper) {
       }
     }
   }
-  templateObj = attachViews(view, templateObj, widgetWrapper, this.partials || registeredPartials);
+  templateObj = attachViews(view, templateObj, Context.WidgetWrapper, this.partials || registeredPartials);
   return new Template(templateObj, this.partials, view);
 };
 
